@@ -42,18 +42,32 @@ jobs:
           path: |
             release.zip
             !venv/
-      - name: Send Email
-        uses: hilarion5/send-mail@v1
+
+      - name: Announcerr
+        uses: singhkshitij/announcerr@v2.0
         with:
-          smtp-server: ${{ secrets.SMTP_SERVER }}
-          smtp-port: 587
-          smtp-secure: true
-          from-email: mysticsync.inc@gmail.com
-          to-email: mahajandhiru001@gmail.com
+          server_address: smtp.gmail.com
+          server_port: 587
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: Test Email
           body: This is a test email sent from GitHub Actions.
+          to: mahajandhiru001@gmail.com
+          from: mysticSync # <kshitij@mytrashcode.com>
+
+
+      # - name: Send Email
+      #   uses: hilarion5/send-mail@v1
+      #   with:
+      #     smtp-server: ${{ secrets.SMTP_SERVER }}
+      #     smtp-port: 587
+      #     smtp-secure: true
+      #     from-email: mysticsync.inc@gmail.com
+      #     to-email: mahajandhiru001@gmail.com
+      #     username: ${{ secrets.SMTP_USER }}
+      #     password: ${{ secrets.SMTP_PASSWORD }}
+      #     subject: Test Email
+      #     body: This is a test email sent from GitHub Actions.
   # notif:
   #   runs-on: ubuntu-latest
 
