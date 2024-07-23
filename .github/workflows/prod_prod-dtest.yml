@@ -42,20 +42,31 @@ jobs:
           path: |
             release.zip
             !venv/
-
-  notif:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Send Email Notifications
-        uses: danthe1st/email-filechange-notif-action@v1
+      - name: Send Email
+        uses: hilarion5/send-mail@v1
         with:
-          senderEmail: "mysticsync.inc@gmail.com"
-          subjectLine: "GitHub file change notification"
-          mailingList: "mahajandhiru001@gmail.com"
-          smtpServer: ${{ secrets.SMTP_SERVER }}
-          smtpPort: 587
-          smtpUsername: ${{ secrets.SMTP_USER }}
-          smtpPassword: ${{ secrets.SMTP_PASSWORD }}
+          smtp-server: ${{ secrets.SMTP_SERVER }}
+          smtp-port: 587
+          smtp-secure: true
+          from-email: mysticsync.inc@gmail.com
+          to-email: mahajandhiru001@gmail.com
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: Test Email
+          body: This is a test email sent from GitHub Actions.
+  # notif:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - name: Send Email Notifications
+  #       uses: danthe1st/email-filechange-notif-action@v1
+  #       with:
+  #         senderEmail: "mysticsync.inc@gmail.com"
+  #         subjectLine: "GitHub file change notification"
+  #         mailingList: "mahajandhiru001@gmail.com"
+  #         smtpServer: ${{ secrets.SMTP_SERVER }}
+  #         smtpPort: 587
+  #         smtpUsername: ${{ secrets.SMTP_USER }}
+  #         smtpPassword: ${{ secrets.SMTP_PASSWORD }}
