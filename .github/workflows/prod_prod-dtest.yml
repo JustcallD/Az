@@ -20,16 +20,16 @@ jobs:
       - name: Set up Python version
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: Create and start virtual environment
         run: |
           python -m venv venv
           source venv/bin/activate
-      
+
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
@@ -43,36 +43,19 @@ jobs:
             release.zip
             !venv/
 
-  deploy:
+  notif:
     runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: python-app
+      - uses: actions/checkout@v4
 
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-
-      
-      - name: Login to Azure
-        uses: azure/login@v2
+      - name: Send Email Notifications
+        uses: danthe1st/email-filechange-notif-action@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_B7FF8E99517543D292248EA5A09B92D5 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_645BD8009AD147FB8072E8DB801C389D }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0105382937E9476A9E26AC1CC09C1C1F }}
-
-      - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v3
-        id: deploy-to-webapp
-        with:
-          app-name: 'Prod-DTest'
-          slot-name: 'Production'
-          
+          senderEmail: "mysticsync.inc@gmail.com"
+          subjectLine: "GitHub file change notification"
+          mailingList: "mahajandhiru001@gmail.com"
+          smtpServer: ${{ secrets.SMTP_SERVER }}
+          smtpPort: 587
+          smtpUsername: ${{ secrets.SMTP_USER }}
+          smtpPassword: ${{ secrets.SMTP_PASSWORD }}
