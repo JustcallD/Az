@@ -5,10 +5,11 @@
 name: Build and Deploy Python App to Azure Web App
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - dev  # Trigger on pushes to dev branch
       - prod  # Trigger on pushes to prod branch
+
 
 jobs:
   build:
