@@ -2,9 +2,7 @@ name: Manual Deployment to Azure Web App (Prod)
 
 on:
   workflow_dispatch:
-  push:  # Removed extra indentation
-    branches:
-      - prod
+
 
 jobs:
   deploy:
