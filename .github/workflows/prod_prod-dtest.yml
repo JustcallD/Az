@@ -21,6 +21,9 @@ jobs:
         with:
           name: python-app
 
+      - name: Display structure of downloaded files
+        run: ls -R
+
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
