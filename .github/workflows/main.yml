@@ -13,16 +13,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4  # Checkout the code
 
+      # Azure Login with Service Principal (using secrets)
+      - uses: Azure/login@v5
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+
       # Download artifact (if upload is enabled in prod_prod-dtest.yml)
-      #- uses: actions/download-artifact@v4
-       # with:
-        #  name: python-app  # Replace with the artifact name from prod_prod-dtest.yml
-         # path: .  # Download to current directory
+      # ... (optional step)
 
       # Deployment steps specific to your Azure Web App
       - uses: Azure/webapps-deploy@v2
         with:
-          # Replace with your Azure credentials and details
+          # Replace with your details
           package: 'python-app.zip'  # Replace with artifact name if downloaded
           app-name: 'Prod-DTest'  # Replace with your Azure Web App name
           slot-name: 'prod'  # Replace with slot name (optional)
