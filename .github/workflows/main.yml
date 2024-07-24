@@ -14,6 +14,7 @@ jobs:
       - uses: actions/checkout@v4  # Checkout the code
 
       # Azure Login with Service Principal (using secrets)
+      - uses: Azure/login@v5
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
