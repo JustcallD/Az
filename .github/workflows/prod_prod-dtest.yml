@@ -2,13 +2,13 @@ name: Manual Deployment to Azure Web App (Prod)
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - prod # Trigger on pushes to prod branch
+
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    steps:
+    - name: Download build artifacts
 #    needs: build
     environment:
       name: "Production"
