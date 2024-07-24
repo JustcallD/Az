@@ -19,7 +19,10 @@ jobs:
       # Deployment steps specific to your Azure Web App
       - uses: Azure/webapps-deploy@v2
         with:
-          # Replace with your Azure credentials and details
-          package: 'python-app.zip'  # Replace with artifact name if downloaded 
+          # Replace with your Azure credentials and details (publish profile or service principal)
+          # publish-profile: ${{ secrets.AZURE_SPN }}  # For publish profile method
+          username: ${{ secrets.AZURE_CLIENT_ID }}  # For service principal method
+          password: ${{ secrets.AZURE_CLIENT_SECRET }}  # For service principal method
+          package: 'python-app.zip'  # Replace with artifact name if downloaded 
           app-name: 'Prod-DTest'  # Replace with your Azure Web App name
           slot-name: 'prod'  # Replace with slot name (optional)
