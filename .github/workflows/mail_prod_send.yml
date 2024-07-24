@@ -38,6 +38,7 @@ jobs:
           path: |
             release.zip
             !venv/
+          retention-days: 5  # Keep the artifact for 5 days
 
       - name: Announcerr
         if: ${{ github.ref == 'refs/heads/prod' }}  # Only run for prod branch
@@ -50,4 +51,4 @@ jobs:
           subject: "Production Build Ready for Deployment"
           body: "The production code has been successfully built and is ready for deployment. Please deploy it to the production environment manually. check your email"
           to: shubhanginannaware1155@gmail.com 
-          from: mysticSync # <kshitij@mytrashcode.com>
+          from: mysticSync  # <kshitij@mytrashcode.com>
