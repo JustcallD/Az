@@ -1,0 +1,53 @@
+name: Build and Deploy Python App to Azure Web App
+
+on:
+  push:
+    branches:
+      - prod  # Trigger on pushes to prod branch
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python version
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Create and start virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        
+      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
+
+      - name: Upload artifact for deployment jobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-app
+          path: |
+            release.zip
+            !venv/
+
+      - name: Announcerr
+        if: ${{ github.ref == 'refs/heads/prod' }}  # Only run for prod branch
+        uses: singhkshitij/announcerr@v2.0
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "Production Build Ready for Deployment"
+          body: "The production code has been successfully built and is ready for deployment. Please deploy it to the production environment manually."
+          to: shubhanginannaware1155@gmail.com 
+          from: mysticSync # <kshitij@mytrashcode.com>
