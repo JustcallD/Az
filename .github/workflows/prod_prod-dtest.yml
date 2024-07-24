@@ -1,9 +1,6 @@
 name: Build and deploy Python app to Azure Web App - Prod-DTest
 
 on:
-  push:
-    branches:
-      - prod
   workflow_dispatch:
 
 jobs:
@@ -20,6 +17,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: python-app
+          path: |
+            release.zip
+            !venv/
 
       - name: Display structure of downloaded files
         run: ls -R
