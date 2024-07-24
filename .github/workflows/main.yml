@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest  # Use Ubuntu runners
 
     steps:
-      - uses: actions/checkout  # Checkout the code
+      - uses: actions/checkout@v5  # Checkout the code
 
       # Azure Login with Service Principal (using secrets)
       - uses: Azure/login@v5
