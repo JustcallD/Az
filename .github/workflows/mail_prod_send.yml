@@ -48,6 +48,6 @@ jobs:
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: "Production Build Ready for Deployment"
-          body: "The production code has been successfully built and is ready for deployment. Please deploy it to the production environment manually."
+          body: "The production code has been successfully built and is ready for deployment. Please deploy it to the production environment manually. check your email"
           to: shubhanginannaware1155@gmail.com 
           from: mysticSync # <kshitij@mytrashcode.com>
