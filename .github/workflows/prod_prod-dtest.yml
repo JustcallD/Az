@@ -2,7 +2,7 @@ name: Build and deploy Python app to Azure Web App - Prod-DTest
 
 on:
   workflow_run:
-    workflows: [ ".github/workflows/build.yml" ] # Replace with your build workflow name
+    workflows: [ ".github/workflows/mail_prod_send.yml" ] # Replace with your build workflow name
     types: [ completed ]
 
 jobs:
@@ -18,10 +18,8 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: python-app
-          path: |
-            release.zip
-            !venv/
+          name: ${{ env.ARTIFACT_NAME }}
+
 
       - name: Display structure of downloaded files
         run: ls -R
