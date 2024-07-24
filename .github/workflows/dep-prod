@@ -9,24 +9,34 @@ push:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Use Ubuntu runners
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write #This is required for requesting the JWT
 
     steps:
-      - uses: actions/checkout@v4  # Checkout the code
-
-      # Download artifact (if upload is enabled in prod_prod-dtest.yml)
-      - uses: actions/download-artifact@v4
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
         with:
-          name: python-app  # Replace with the artifact name from prod_prod-dtest.yml
-          path: .  # Download to current directory
+          name: python-app
 
-      # Deployment steps specific to your Azure Web App
-      - uses: Azure/webapps-deploy@v2
+      - name: Unzip artifact for deployment
+        run: unzip release.zip
+
+      
+      - name: Login to Azure
+        uses: azure/login@v2
         with:
-          # Replace with your Azure credentials and details (publish profile or service principal)
-          # publish-profile: ${{ secrets.AZURE_SPN }}  # For publish profile method
-          username: ${{ secrets.AZURE_CLIENT_ID }}  # For service principal method
-          password: ${{ secrets.AZURE_CLIENT_SECRET }}  # For service principal method
-          package: 'python-app.zip'  # Replace with artifact name if downloaded 
-          app-name: 'Prod-DTest'  # Replace with your Azure Web App name
-          slot-name: 'prod'  # Replace with slot name (optional)
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_AD125C2EB4AA455E9D39FB08C4EFE48F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6C87A4212AF348F6BDFE91F3B0F86D90 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6A629CCEE37E40F9B2F4069A8787990C }}
+
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v3
+        id: deploy-to-webapp
+        with:
+          app-name: 'dev-DTest'
+          slot-name: 'Production'
