@@ -7,7 +7,7 @@ name: Build and deploy Python app to Azure Web App - dev-DTest
 on:
   push:
     branches:
-      - prod
+      - dev
   workflow_dispatch:
 
 jobs:
