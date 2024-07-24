@@ -1,7 +1,9 @@
 name: Build and deploy Python app to Azure Web App - Prod-DTest
 
 on:
-  workflow_dispatch:
+  workflow_run:
+    workflows: [ ".github/workflows/build.yml" ] # Replace with your build workflow name
+    types: [ completed ]
 
 jobs:
   deploy:
