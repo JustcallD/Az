@@ -52,7 +52,7 @@ jobs:
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: Test Email
           body: This is a test email sent from GitHub Actions.
-          to: mahajandhiru001@gmail.com
+          to: shubhanginannaware1155@gmail.com 
           from: mysticSync # <kshitij@mytrashcode.com>
 
 
