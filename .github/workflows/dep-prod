@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
 
 push:
-    branches:
-      - prod  # Trigger on pushes to prod branch 
+  branches:
+    - prod # Trigger on pushes to prod branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Production'
+      name: "Production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
@@ -26,17 +26,16 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_AD125C2EB4AA455E9D39FB08C4EFE48F }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6C87A4212AF348F6BDFE91F3B0F86D90 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6A629CCEE37E40F9B2F4069A8787990C }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_CC34A95A9DD54D67841EB327044A5352 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B64F932053FC4BD98E166E39CAF2DAA9 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3196DCF9FDE04EA39884F06CE5173D7D }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: "Deploy to Azure Web App"
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'dev-DTest'
-          slot-name: 'Production'
+          app-name: "Prod-DTest"
+          slot-name: "Production"
