@@ -41,6 +41,8 @@ jobs:
           path: |
             release.zip
             !venv/  
+          retention-days: 7  # Keep the artifact for 7 days
+
 
         #  retention-days: 5  # Keep the artifact for 5 days
 
