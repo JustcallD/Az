@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - prod  # Trigger on pushes to prod branch
-  workflow_dispatch:
 
 jobs:
   build:
